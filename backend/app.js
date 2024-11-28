@@ -9,7 +9,7 @@ const errorMiddleware = require("./middlewares/error");
 const userRoutes = require("./routes/userRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 dotenv.config();
-
+connectDB();
 //middlewares
 app.use(express.json());
 app.use(cookieParser());
@@ -20,7 +20,6 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.listen(process.env.PORT, () => {
-  connectDB();
   console.log("Server running at port", process.env.PORT);
 });
 app.use("/api/v1/user", userRoutes);
