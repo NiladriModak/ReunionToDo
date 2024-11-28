@@ -9,7 +9,7 @@ import Loading from "../Loading/Loading";
 // TaskTable.jsx
 
 const TaskTable = ({ taskList, colHeading, refetchTasks }) => {
-  const [openUpdateModal, setOpenUpdateModal] = useState(false); // Move this inside the component
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [taskId, setTaskId] = useState("");
   const [currentStatus, setCurrentStatus] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -30,7 +30,7 @@ const TaskTable = ({ taskList, colHeading, refetchTasks }) => {
     setLoading(true);
     setTaskId(taskuid);
     setOpenUpdateModal(!openUpdateModal);
-    setCurrentStatus(stat); // This toggle function will now work
+    setCurrentStatus(stat);
     setLoading(false);
   };
   const formatDuration = (ms) => {

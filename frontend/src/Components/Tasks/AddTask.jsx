@@ -28,7 +28,6 @@ const Demo = ({
 }) => {
   // console.log("currentStatus", currentStatus);
 
-  // State for form inputs
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState(1);
   const [startTime, setStartTime] = useState("");
@@ -117,7 +116,7 @@ const Demo = ({
       if (priority) formdata.priority = priority;
       if (status) {
         formdata.status = true;
-        const localDate = new Date(); // Local time
+        const localDate = new Date();
         const utcDate = new Date(
           localDate.getTime() - localDate.getTimezoneOffset() * 60000
         );

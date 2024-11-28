@@ -51,7 +51,7 @@ const getAllTasksFunction = async () => {
 const getAllTasks = () =>
   useQuery({
     queryKey: ["allTasks"],
-    queryFn: getAllTasksFunction, // Directly pass the function reference
+    queryFn: getAllTasksFunction,
   });
 
 export { getAllTasks, addTask, deleteTask, updateTask };

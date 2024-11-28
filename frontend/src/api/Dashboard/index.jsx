@@ -20,7 +20,7 @@ const getAllInfoFunction = async () => {
 const getAllDashboardInfo = () =>
   useQuery({
     queryKey: ["allInfo"],
-    queryFn: getAllInfoFunction, // Directly pass the function reference
+    queryFn: getAllInfoFunction,
   });
 
 export { getAllDashboardInfo };

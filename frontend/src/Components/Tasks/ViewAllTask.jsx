@@ -5,8 +5,7 @@ import Layout from "../Layout";
 import { ArrowUpDown, Check, MoveDown } from "lucide-react";
 
 import TaskTable from "./TaskTable";
-import Demo from "./AddTask"; // Ensure the Demo component is properly imported
-
+import Demo from "./AddTask";
 import MenuItemList from "./MenuItem";
 import Loading from "../Loading/Loading";
 
