@@ -39,9 +39,9 @@ function Login() {
         <Card.Header>
           <Card.Title className="text-2xl font-bold">Sign up</Card.Title>
           <Card.Description>
-            Dont have an account?
+            Allready have an account?
             <Link className="ml-2 font-semibold text-blue-600" to="/register">
-              Register
+              Login
             </Link>
           </Card.Description>
         </Card.Header>
