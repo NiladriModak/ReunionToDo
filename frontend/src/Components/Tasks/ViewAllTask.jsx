@@ -8,6 +8,7 @@ import TaskTable from "./TaskTable";
 import Demo from "./AddTask"; // Ensure the Demo component is properly imported
 
 import MenuItemList from "./MenuItem";
+import Loading from "../Loading/Loading";
 
 function ViewAllTask() {
   const { data, error, isLoading, refetch } = getAllTasks();
@@ -31,7 +32,7 @@ function ViewAllTask() {
 
   const [taskList, setTaskList] = useState([]);
   const [originalTaskList, setOriginalTaskList] = useState([]);
-
+  const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
@@ -83,7 +84,7 @@ function ViewAllTask() {
   return (
     <Layout>
       {isLoading ? (
-        <h1>Loading</h1>
+        <Loading />
       ) : (
         <div className="flex flex-col items-center justify-center ">
           <div className="w-11/12 mt-4 flex justify-between">
@@ -164,6 +165,7 @@ function ViewAllTask() {
               isaddTask={true}
               taskId={null}
               currentStatus={false}
+              setLoading={setLoading}
             />
           )}
         </div>

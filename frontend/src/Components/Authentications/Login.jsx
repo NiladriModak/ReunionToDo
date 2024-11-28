@@ -17,14 +17,16 @@ function Login() {
       const response = await loginUser({ email, password });
       if (response.data.success === true) {
         toast.success("Logged in successfully");
-        setLoadingButton(false);
+
         localStorage.setItem("token", response.data.token);
         navigator("/dashboard");
       } else {
         toast.error(response.data.message);
       }
+      setLoadingButton(false);
     } catch (error) {
-      toast.error("Internal server error");
+      toast.error(error.response.data.message);
+      setLoadingButton(false);
     }
   };
   return (
@@ -63,7 +65,7 @@ function Login() {
         </Card.Body>
         <Card.Footer justifyContent="flex-end">
           <Button
-            loading={loadingButton}
+            disabled={loadingButton}
             onClick={handleClick}
             variant="solid"
             className="bg-violet-600 p-4"

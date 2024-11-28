@@ -15,6 +15,7 @@ import { Switch } from "../ui/switch";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { addTask, updateTask } from "../../api/Task";
+import Loading from "../Loading/Loading";
 
 const Demo = ({
   openModal,
@@ -23,6 +24,7 @@ const Demo = ({
   isaddTask,
   taskId,
   currentStatus,
+  setLoading,
 }) => {
   console.log("currentStatus", currentStatus);
 
@@ -33,11 +35,10 @@ const Demo = ({
   const [startDate, setStartDate] = useState("");
   const [endTime, setEndTime] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [status, setStatus] = useState(currentStatus); // Add state for status
+  const [status, setStatus] = useState(currentStatus);
 
-  // Handle to convert date and time to ISO format
   const handleToISO = (parts1, parts2) => {
-    const combined = `${parts1}T${parts2}:00.000Z`; // Ensure Z for UTC
+    const combined = `${parts1}T${parts2}:00.000Z`;
     return new Date(combined).toISOString();
   };
 
@@ -56,6 +57,8 @@ const Demo = ({
 
   const handleAddTask = async () => {
     try {
+      setLoading(true);
+      setOpenModal(false);
       if (
         !startDate ||
         !startTime ||
@@ -65,16 +68,19 @@ const Demo = ({
         !priority
       ) {
         toast.error("Please enter all the details");
+        setLoading(false);
         return;
       }
       if (priority > 5 || priority < 1) {
         toast.error("The priority should be in range 1 to 5");
+        setLoading(false);
         return;
       }
       const start = handleToISO(startDate, startTime);
       const end = handleToISO(endDate, endTime);
       if (start > end) {
         toast.error("start time must be greater than end time");
+        setLoading(false);
         return;
       }
       await addTaskMutate({
@@ -83,13 +89,18 @@ const Demo = ({
         startTime: start,
         endTime: end,
       });
+      setLoading(false);
     } catch (error) {
       console.log("Error", error);
+      setLoading(false);
     }
   };
 
   const handleUpdateTask = async () => {
     try {
+      setLoading(true);
+      setOpenModal(false);
+
       let formdata = {};
       if (startDate && startTime) {
         formdata.startTime = handleToISO(startDate, startTime);
@@ -100,6 +111,7 @@ const Demo = ({
       if (title) formdata.title = title;
       if ((priority && priority > 5) || priority < 1) {
         toast.error("The priority should be in range 1 to 5");
+        setLoading(false);
         return;
       }
       if (priority) formdata.priority = priority;
@@ -108,7 +120,6 @@ const Demo = ({
         formdata.endTime = new Date();
       } else formdata.status = false;
 
-      // Call the API to update the task
       const response = await updateTask(taskId, formdata);
       console.log("response", response);
 
@@ -117,8 +128,10 @@ const Demo = ({
         setOpenModal(false);
         refetchTasks();
       }
+      setLoading(false);
     } catch (error) {
       console.log("eee", error);
+      setLoading(false);
     }
   };
 
@@ -134,9 +147,7 @@ const Demo = ({
 
   useEffect(() => {
     if (isaddTask === false && taskId) {
-      // Pre-fill form with the existing task data, including the status
       setStatus(currentStatus);
-      // Populate other fields with existing task data (you can use an API call or props)
     }
   }, [isaddTask, taskId, currentStatus]);
 

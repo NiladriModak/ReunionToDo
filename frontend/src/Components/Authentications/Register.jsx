@@ -18,13 +18,15 @@ function Register() {
       const response = await registerUser({ username, email, password });
       if (response.data.success === true) {
         toast.success("Logged in successfully");
-        setLoadingButton(false);
+
         navigator("/");
       } else {
         toast.error(response.data.message);
       }
+      setLoadingButton(false);
     } catch (error) {
       toast.error(error.response.data.message);
+      setLoadingButton(false);
     }
   };
   return (
@@ -69,7 +71,7 @@ function Register() {
         </Card.Body>
         <Card.Footer justifyContent="flex-end">
           <Button
-            loading={loadingButton}
+            disabled={loadingButton}
             onClick={handleClick}
             variant="solid"
             className="bg-violet-600 p-4"
