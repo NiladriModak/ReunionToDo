@@ -5,7 +5,7 @@ import {
   MenuItemCommand,
   MenuRoot,
   MenuTrigger,
-} from "@/components/ui/menu";
+} from "../ui/menu";
 import { Button } from "@chakra-ui/react";
 function MenuItemList({ menuList, menuButton, onSelect, isSort }) {
   return (

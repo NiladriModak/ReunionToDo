@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogRoot,
-} from "@/components/ui/dialog";
+} from "../ui/dialog";
 import { Button, Input, VStack } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
