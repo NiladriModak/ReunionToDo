@@ -6,7 +6,9 @@ exports.isAuthenticated = async (req, res, next) => {
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return next(
-      new ErrorHandler("Unauthorized access. Bearer token is required.", 401)
+      next(
+        new ErrorHandler("Unauthorized access. Bearer token is required.", 401)
+      )
     );
   }
   const token = authHeader.split(" ")[1];
