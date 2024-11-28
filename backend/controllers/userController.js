@@ -9,11 +9,11 @@ exports.register = async (req, res, next) => {
     // console.log(username, email, password);
 
     if (!username || !email || !password) {
-      return new ErrorHandler("Please enter all the details", 401);
+      return next(new ErrorHandler("Please enter all the details", 401));
     }
     const user = await user_model.findOne({ email });
     if (user) {
-      return new ErrorHandler("Email is already registered", 401);
+      return next(new ErrorHandler("Email is already registered", 401));
     }
     const hashed_password = await bcrypt.hash(password, 10);
     await user_model.create({
@@ -26,23 +26,23 @@ exports.register = async (req, res, next) => {
       success: true,
     });
   } catch (err) {
-    return new ErrorHandler("Internal server error", 400);
+    return next(new ErrorHandler("Internal server error", 400));
   }
 };
 
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return new ErrorHandler("Please enter all the details", 401);
+      return next(new ErrorHandler("Please enter all the details", 401));
     }
     let user = await user_model.findOne({ email });
     if (!user) {
-      return new ErrorHandler("Please sign in", 401);
+      return next(new ErrorHandler("Please sign in", 401));
     }
     const match_password = await bcrypt.compare(password, user.password);
     if (!match_password) {
-      return new ErrorHandler("Invalid credentials", 401);
+      return next(new ErrorHandler("Invalid credentials", 401));
     }
 
     const token = await jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
@@ -89,7 +89,7 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.logout = async (req, res) => {
+exports.logout = async (req, res, next) => {
   try {
     return res.cookie("token", "", { maxAge: 0 }).json({
       message: "Logged out successfully",
