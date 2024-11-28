@@ -11,7 +11,7 @@ import {
 } from "../ui/dialog";
 import { Button, Input, VStack } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import { Switch } from "@/components/ui/switch";
+import { Switch } from "../ui/switch";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { addTask, updateTask } from "../../api/Task";
