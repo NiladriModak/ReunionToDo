@@ -40,11 +40,11 @@ function Login() {
         className="w-full  md:w-xl bg-gradient-to-r from-slate-800 to-slate-900 border-2 border-slate-400"
       >
         <Card.Header>
-          <Card.Title className="text-2xl font-bold">Sign up</Card.Title>
+          <Card.Title className="text-2xl font-bold">Sign in</Card.Title>
           <Card.Description>
             Allready have an account?
             <Link className="ml-2 font-semibold text-blue-600" to="/register">
-              Login
+              Sign up
             </Link>
             <h1 className="flex flex-col font-semibold text-md text-green-400">
               <h1>Guest User Login</h1>
