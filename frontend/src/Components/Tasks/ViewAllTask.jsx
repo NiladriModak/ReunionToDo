@@ -12,7 +12,7 @@ import Loading from "../Loading/Loading";
 
 function ViewAllTask() {
   const { data, error, isLoading, refetch } = getAllTasks();
-  console.log(data);
+  // console.log(data);
 
   const colHeading = [
     "Task Id",
@@ -36,14 +36,21 @@ function ViewAllTask() {
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
+    refetch();
+  }, []);
+
+  useEffect(() => {
     if (data?.tasks) {
       setTaskList(data.tasks);
       setOriginalTaskList(data.tasks);
     }
   }, [data]);
+
   useEffect(() => {
-    handleSort();
-  }, [sorting, priorityFilter, statusFilter]);
+    if (originalTaskList.length > 0) {
+      handleSort();
+    }
+  }, [sorting, priorityFilter, statusFilter, originalTaskList]);
 
   const handleSort = () => {
     let filteredTasks = [...originalTaskList];

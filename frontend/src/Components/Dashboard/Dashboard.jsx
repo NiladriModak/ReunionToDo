@@ -50,7 +50,7 @@ function Dashboard() {
               </h1>
               <h1 className="flex flex-col sm:mx-4 my-2 sm:my-0  bg-gradient-to-r from-violet-500 to-violet-800 p-4 rounded-lg items-center justify-center">
                 <span className="text-2xl font-semibold">
-                  Average Time to complete
+                  Average Time per completed task
                 </span>{" "}
                 <span className="text-2xl font-bold">
                   {data?.averageTimePerCompletedTask}

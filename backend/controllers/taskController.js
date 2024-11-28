@@ -72,7 +72,7 @@ exports.viewAllTask = async (req, res, next) => {
 exports.updateTask = async (req, res, next) => {
   try {
     const { title, startTime, endTime, priority, status } = req.body;
-    console.log(status);
+    // console.log(status);
     const taskId = req.params.taskId;
 
     if (!title && !startTime && !endTime && !priority && !status) {

@@ -34,6 +34,7 @@ function Login() {
       <h2 className="text-3xl font-bold mb-6 text-slate-50">
         TODO APP - Reunion
       </h2>
+
       <Card.Root
         maxW="xl"
         className="w-full  md:w-xl bg-gradient-to-r from-slate-800 to-slate-900 border-2 border-slate-400"
@@ -45,6 +46,11 @@ function Login() {
             <Link className="ml-2 font-semibold text-blue-600" to="/register">
               Login
             </Link>
+            <h1 className="flex flex-col font-semibold text-md text-green-400">
+              <h1>Guest User Login</h1>
+              <h1>email = guestUser@gmail.com</h1>
+              <h1>password = guestUser@gmail.com</h1>
+            </h1>
           </Card.Description>
         </Card.Header>
         <Card.Body>

@@ -32,7 +32,7 @@ const addTask = async ({
 };
 
 const deleteTask = async (taskId) => {
-  console.log("hhhh", taskId);
+  // console.log("hhhh", taskId);
 
   const { data } = await AuthAPI().delete(`/${taskId}/deleteTask`);
   return data;

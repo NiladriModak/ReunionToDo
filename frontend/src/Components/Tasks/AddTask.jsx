@@ -26,7 +26,7 @@ const Demo = ({
   currentStatus,
   setLoading,
 }) => {
-  console.log("currentStatus", currentStatus);
+  // console.log("currentStatus", currentStatus);
 
   // State for form inputs
   const [title, setTitle] = useState("");
@@ -39,7 +39,7 @@ const Demo = ({
 
   const handleToISO = (parts1, parts2) => {
     const combined = `${parts1}T${parts2}:00.000Z`;
-    return new Date(combined).toISOString();
+    return combined;
   };
 
   const { mutate: addTaskMutate, isLoading } = useMutation({
@@ -91,7 +91,7 @@ const Demo = ({
       });
       setLoading(false);
     } catch (error) {
-      console.log("Error", error);
+      // console.log("Error", error);
       setLoading(false);
     }
   };
@@ -117,11 +117,15 @@ const Demo = ({
       if (priority) formdata.priority = priority;
       if (status) {
         formdata.status = true;
-        formdata.endTime = new Date();
+        const localDate = new Date(); // Local time
+        const utcDate = new Date(
+          localDate.getTime() - localDate.getTimezoneOffset() * 60000
+        );
+        formdata.endTime = utcDate.toISOString();
       } else formdata.status = false;
 
       const response = await updateTask(taskId, formdata);
-      console.log("response", response);
+      // console.log("response", response);
 
       if (response.success === true) {
         toast.success("Task updated successfully!");
@@ -130,7 +134,7 @@ const Demo = ({
       }
       setLoading(false);
     } catch (error) {
-      console.log("eee", error);
+      // console.log("eee", error);
       setLoading(false);
     }
   };

@@ -2,7 +2,7 @@ import { Dialog, HStack, Table } from "@chakra-ui/react";
 import { Pencil, Trash2 } from "lucide-react";
 import { deleteTask } from "../../api/Task";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Demo from "./AddTask";
 import Loading from "../Loading/Loading";
 
@@ -38,6 +38,9 @@ const TaskTable = ({ taskList, colHeading, refetchTasks }) => {
     const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
     return `${hours}h ${minutes}m`;
   };
+  useEffect(() => {
+    refetchTasks();
+  }, []);
 
   return (
     <div className="w-full flex flex-col justify-center items-center">
