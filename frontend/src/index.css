@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.body {
+  height: 100%;
+  border: 1px solid red;
+}
+#root {
+  height: 100vh;
+}
