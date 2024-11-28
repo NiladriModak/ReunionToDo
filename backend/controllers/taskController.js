@@ -12,7 +12,7 @@ exports.addTask = async (req, res, next) => {
 
     // console.log(title, startTime, endTime, priority);
     if (!title || !startTime || !endTime || !priority) {
-      return next(new ErrorHandler("Please enter all details", 400));
+      return new ErrorHandler("Please enter all details", 400);
     }
     const task = await task_model.create({
       title,
@@ -41,7 +41,7 @@ exports.addTask = async (req, res, next) => {
     });
   } catch (error) {
     // console.log(error.message);
-    return next(new ErrorHandler("Internal server error", 404));
+    return new ErrorHandler("Internal server error", 404);
   }
 };
 //view task
@@ -50,11 +50,11 @@ exports.viewAllTask = async (req, res, next) => {
     const userId = req.user?._id;
 
     if (!userId) {
-      return next(new ErrorHandler("No user found", 400));
+      return new ErrorHandler("No user found", 400);
     }
     const authorId = mongoose.Types.ObjectId.isValid(userId) && userId;
     if (!authorId) {
-      return next(new ErrorHandler("Invalid user ID", 400));
+      return new ErrorHandler("Invalid user ID", 400);
     }
     const tasks = await task_model.find({ author: authorId });
 
@@ -64,7 +64,7 @@ exports.viewAllTask = async (req, res, next) => {
     });
   } catch (error) {
     console.error(error.message);
-    return next(new ErrorHandler("Internal server error", 500));
+    return new ErrorHandler("Internal server error", 500);
   }
 };
 
@@ -76,11 +76,11 @@ exports.updateTask = async (req, res, next) => {
     const taskId = req.params.taskId;
 
     if (!title && !startTime && !endTime && !priority && !status) {
-      return next(new ErrorHandler("Please enter details to update", 404));
+      return new ErrorHandler("Please enter details to update", 404);
     }
     const task = await task_model.findById(taskId);
     if (!task) {
-      return next(new ErrorHandler("Task is not defined", 404));
+      return new ErrorHandler("Task is not defined", 404);
     }
 
     const newTask = await task_model.findByIdAndUpdate(taskId, req.body, {
@@ -95,7 +95,7 @@ exports.updateTask = async (req, res, next) => {
     });
   } catch (error) {
     // console.log(error.message);
-    return next(new ErrorHandler("Internal server error", 404));
+    return new ErrorHandler("Internal server error", 404);
   }
 };
 
@@ -105,11 +105,11 @@ exports.deleteTask = async (req, res, next) => {
     const { taskId } = req.params;
     const task = await task_model.findById(taskId);
     if (!task) {
-      next(new ErrorHandler("Task does not exists", 404));
+      new ErrorHandler("Task does not exists", 404);
     }
     const user = await user_model.findById(task.author);
     if (!user) {
-      next(new ErrorHandler("Author not found", 404));
+      new ErrorHandler("Author not found", 404);
     }
     user.tasks = user.tasks.filter((ele) => ele.toString() !== taskId);
     user.save();
@@ -121,7 +121,7 @@ exports.deleteTask = async (req, res, next) => {
     });
   } catch (error) {
     // console.log(error.message);
-    next(new ErrorHandler("Internal server error", 404));
+    new ErrorHandler("Internal server error", 404);
   }
 };
 
@@ -129,11 +129,11 @@ exports.Dashboard_Info = async (req, res, next) => {
   try {
     const userId = req.user?._id;
     if (!userId) {
-      return next(new ErrorHandler("No user found", 400));
+      return new ErrorHandler("No user found", 400);
     }
     const authorId = mongoose.Types.ObjectId.isValid(userId) && userId;
     if (!authorId) {
-      return next(new ErrorHandler("Invalid user ID", 400));
+      return new ErrorHandler("Invalid user ID", 400);
     }
     const task = await task_model.find({ author: authorId });
     const totalTask = task.length;

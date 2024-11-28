@@ -9,11 +9,11 @@ exports.register = async (req, res, next) => {
     // console.log(username, email, password);
 
     if (!username || !email || !password) {
-      return next(new ErrorHandler("Please enter all the details", 401));
+      return new ErrorHandler("Please enter all the details", 401);
     }
     const user = await user_model.findOne({ email });
     if (user) {
-      return next(new ErrorHandler("Email is already registered", 401));
+      return new ErrorHandler("Email is already registered", 401);
     }
     const hashed_password = await bcrypt.hash(password, 10);
     await user_model.create({
@@ -34,15 +34,15 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return next(new ErrorHandler("Please enter all the details", 401));
+      return new ErrorHandler("Please enter all the details", 401);
     }
     let user = await user_model.findOne({ email });
     if (!user) {
-      return next(new ErrorHandler("Please sign in", 401));
+      return new ErrorHandler("Please sign in", 401);
     }
     const match_password = await bcrypt.compare(password, user.password);
     if (!match_password) {
-      return next(new ErrorHandler("Invalid credentials", 401));
+      return new ErrorHandler("Invalid credentials", 401);
     }
 
     const token = await jwt.sign({ id: user._id }, process.env.JWT_SECRET, {

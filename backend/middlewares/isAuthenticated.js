@@ -18,10 +18,8 @@ exports.isAuthenticated = async (req, res, next) => {
     next();
   } catch (err) {
     if (err.name === "TokenExpiredError") {
-      return next(
-        new ErrorHandler("Token has expired. Please log in again.", 401)
-      );
+      return new ErrorHandler("Token has expired. Please log in again.", 401);
     }
-    return next(new ErrorHandler("Invalid token", 401));
+    return new ErrorHandler("Invalid token", 401);
   }
 };
