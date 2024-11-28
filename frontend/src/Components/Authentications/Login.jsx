@@ -1,6 +1,6 @@
 import { Button, Card, Input, Stack } from "@chakra-ui/react";
-import { Field } from "@/components/ui/field";
-import { PasswordInput } from "@/components/ui/password-input";
+import { Field } from "../ui/field";
+import { PasswordInput } from "../ui/password-input";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../api/Authentication";

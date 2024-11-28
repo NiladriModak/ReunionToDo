@@ -1,4 +1,4 @@
-import { Field } from "@/components/ui/field";
+import { Field } from "../ui/field";
 import {
   DialogActionTrigger,
   DialogBody,
