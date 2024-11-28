@@ -24,7 +24,7 @@ function Login() {
         toast.error(response.data.message);
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error("Internal server error");
     }
   };
   return (
