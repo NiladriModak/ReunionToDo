@@ -13,6 +13,7 @@ const TaskTable = ({ taskList, colHeading, refetchTasks }) => {
   const [taskId, setTaskId] = useState("");
   const [currentStatus, setCurrentStatus] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [accualTask, setAccualTask] = useState(null);
   const handleDelete = async (taskId, refetchTasks) => {
     setLoading(true);
     const response = await deleteTask(taskId);
@@ -26,11 +27,12 @@ const TaskTable = ({ taskList, colHeading, refetchTasks }) => {
     setLoading(false);
   };
 
-  const handleUpdate = (taskuid, stat) => {
+  const handleUpdate = (taskuid, stat, task) => {
     setLoading(true);
     setTaskId(taskuid);
-    setOpenUpdateModal(!openUpdateModal);
+    setAccualTask(task);
     setCurrentStatus(stat);
+    setOpenUpdateModal(!openUpdateModal);
     setLoading(false);
   };
   const formatDuration = (ms) => {
@@ -105,7 +107,7 @@ const TaskTable = ({ taskList, colHeading, refetchTasks }) => {
                   >
                     <Pencil
                       className="cursor-pointer"
-                      onClick={() => handleUpdate(item._id, item.status)}
+                      onClick={() => handleUpdate(item._id, item.status, item)}
                       size={20}
                     />
                   </Table.Cell>
@@ -136,6 +138,7 @@ const TaskTable = ({ taskList, colHeading, refetchTasks }) => {
           taskId={taskId}
           currentStatus={currentStatus}
           setLoading={setLoading}
+          accualTask={accualTask}
         />
       )}
     </div>

@@ -15,7 +15,6 @@ import { Switch } from "../ui/switch";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { addTask, updateTask } from "../../api/Task";
-import Loading from "../Loading/Loading";
 
 const Demo = ({
   openModal,
@@ -25,11 +24,12 @@ const Demo = ({
   taskId,
   currentStatus,
   setLoading,
+  accualTask,
 }) => {
   // console.log("currentStatus", currentStatus);
 
   const [title, setTitle] = useState("");
-  const [priority, setPriority] = useState(1);
+  const [priority, setPriority] = useState(0);
   const [startTime, setStartTime] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endTime, setEndTime] = useState("");
@@ -41,7 +41,7 @@ const Demo = ({
     return combined;
   };
 
-  const { mutate: addTaskMutate, isLoading } = useMutation({
+  const { mutate: addTaskMutate } = useMutation({
     mutationFn: addTask,
     onSuccess: () => {
       toast.success("Task added successfully!");
@@ -100,20 +100,36 @@ const Demo = ({
       setLoading(true);
       setOpenModal(false);
 
-      let formdata = {};
+      let formdata = {
+        startTime: accualTask.startTime,
+        endTime: accualTask.endTime,
+        priority: accualTask.priority,
+        status: accualTask.status,
+      };
+
       if (startDate && startTime) {
         formdata.startTime = handleToISO(startDate, startTime);
       }
       if (endDate && endTime) {
         formdata.endTime = handleToISO(endDate, endTime);
+        if (formdata.endTime < formdata.startTime) {
+          toast.error("End time is less than start");
+          setLoading(false);
+          return;
+        }
       }
+
       if (title) formdata.title = title;
-      if ((priority && priority > 5) || priority < 1) {
+      if (priority === 0) {
+      } else if ((priority && priority > 5) || priority < 1) {
         toast.error("The priority should be in range 1 to 5");
         setLoading(false);
         return;
       }
-      if (priority) formdata.priority = priority;
+
+      console.log("accual Task ", accualTask);
+
+      if (priority > 0) formdata.priority = priority;
       if (status) {
         formdata.status = true;
         const localDate = new Date();
@@ -124,7 +140,6 @@ const Demo = ({
       } else formdata.status = false;
 
       const response = await updateTask(taskId, formdata);
-      // console.log("response", response);
 
       if (response.success === true) {
         toast.success("Task updated successfully!");
