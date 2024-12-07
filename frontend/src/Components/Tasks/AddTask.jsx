@@ -112,13 +112,12 @@ const Demo = ({
       }
       if (endDate && endTime) {
         formdata.endTime = handleToISO(endDate, endTime);
-        if (formdata.endTime < formdata.startTime) {
-          toast.error("End time is less than start");
-          setLoading(false);
-          return;
-        }
       }
-
+      if (formdata.endTime < formdata.startTime) {
+        toast.error("End time is less than start");
+        setLoading(false);
+        return;
+      }
       if (title) formdata.title = title;
       if (priority === 0) {
       } else if ((priority && priority > 5) || priority < 1) {
